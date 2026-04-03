@@ -27,7 +27,7 @@ export const CATEGORIES = [
   { value: 'accessories', label: 'Accessories' },
 ];
 
-export const WHATSAPP_NUMBER = '919876543210';
+export const WHATSAPP_NUMBER = '919425691935';
 
 export function getDiscountPercent(price: number, originalPrice: number): number {
   return Math.round(((originalPrice - price) / originalPrice) * 100);
