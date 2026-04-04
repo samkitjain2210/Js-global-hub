@@ -3,15 +3,15 @@
 import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { type Product, formatPrice, getDiscountPercent, getWhatsAppLink } from '@/lib/products';
+import { type Product, formatPrice, getDiscountPercent } from '@/lib/products';
 import { useStore } from '@/lib/store';
-import { MessageCircle, ShoppingBag, Flame, Zap, ExternalLink } from 'lucide-react';
+import { ShoppingBag, Flame, Zap, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CountdownTimer from './CountdownTimer';
 
 export default function LocalDealsSection() {
-  const { navigateTo } = useStore();
+  const { navigateTo, addToCart } = useStore();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const offerEnd = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
@@ -78,13 +78,26 @@ export default function LocalDealsSection() {
                       <span className="text-xs text-gray-400 line-through">{formatPrice(product.originalPrice)}</span>
                       <span className="text-[10px] font-semibold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">{getDiscountPercent(product.price, product.originalPrice)}% OFF</span>
                     </div>
-                    <div className="mt-3 flex gap-2">
-                      <Button size="sm" className="h-9 flex-1 rounded-xl bg-green-500 text-[11px] font-bold text-white hover:bg-green-600" onClick={(e) => { e.stopPropagation(); window.open(getWhatsAppLink(product), '_blank'); }}>
-                        <MessageCircle className="mr-1 h-3.5 w-3.5" /> WhatsApp
+
+                    {/* Order + Flipkart buttons */}
+                    <div className="mt-3 flex flex-col gap-2">
+                      <Button
+                        size="sm"
+                        className="h-9 w-full rounded-xl bg-green-500 text-[11px] font-bold text-white hover:bg-green-600"
+                        onClick={(e) => { e.stopPropagation(); addToCart(product); navigateTo('checkout'); }}
+                      >
+                        <ShoppingBag className="mr-1 h-3.5 w-3.5" /> Order Now (COD)
                       </Button>
-                      <Button size="sm" className="h-9 w-9 rounded-xl border-2 border-orange-200 text-orange-500 p-0 hover:bg-orange-50" onClick={(e) => { e.stopPropagation(); navigateTo('product'); }}>
-                        <ShoppingBag className="h-4 w-4" />
-                      </Button>
+                      {product.flipkartLink && product.flipkartLink !== '#' && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-8 w-full rounded-xl border-blue-200 text-[10px] font-semibold text-blue-600 hover:bg-blue-50"
+                          onClick={(e) => { e.stopPropagation(); window.open(product.flipkartLink, '_blank'); }}
+                        >
+                          <ExternalLink className="mr-1 h-3 w-3" /> Buy on Flipkart
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
