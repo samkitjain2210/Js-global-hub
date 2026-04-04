@@ -14,7 +14,7 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const msg = encodeURIComponent(`Hi JS Global Hub!\n\nName: ${formData.name}\nPhone: ${formData.phone}\n\n${formData.message}`);
-    window.open(`https://wa.me/919876543210?text=${msg}`, '_blank');
+    window.open(`https://wa.me/919425691935?text=${msg}`, '_blank');
     setSent(true);
   };
 
@@ -27,9 +27,9 @@ export default function Contact() {
       {/* Quick Contact */}
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {[
-          { icon: Phone, title: 'Phone', value: '+91 98765 43210', color: 'bg-orange-100 text-orange-600' },
-          { icon: MessageCircle, title: 'WhatsApp', value: '+91 98765 43210', color: 'bg-green-100 text-green-600' },
-          { icon: Mail, title: 'Email', value: 'support@jsglobalhub.com', color: 'bg-blue-100 text-blue-600' },
+          { icon: Phone, title: 'Phone', value: '+91 94256 91935', color: 'bg-orange-100 text-orange-600' },
+          { icon: MessageCircle, title: 'WhatsApp', value: '+91 94256 91935', color: 'bg-green-100 text-green-600' },
+          { icon: Mail, title: 'Email', value: 'jsamkit376@gmail.com', color: 'bg-blue-100 text-blue-600' },
           { icon: MapPin, title: 'Location', value: 'Sagar, Madhya Pradesh', color: 'bg-purple-100 text-purple-600' },
         ].map((item) => (
           <div key={item.title} className="flex items-center gap-3 rounded-xl border border-gray-100 bg-white p-4">
