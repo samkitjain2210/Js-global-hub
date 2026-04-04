@@ -21,6 +21,7 @@ model Order {
   paymentMethod String   @default("cod")
   status        String   @default("pending")
   createdAt     DateTime @default(now())
+  returns       Return[]
 }
 
 model Product {
@@ -42,4 +43,42 @@ model Product {
   reviews       Int      @default(0)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  productReviews Review[]
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  customerName String
+  phone      String
+  rating     Int
+  comment    String
+  orderId    String?
+  createdAt  DateTime @default(now())
+}
+
+model Return {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  reason      String
+  description String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String   @unique
+  email        String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model ServiceablePin {
+  id      String @id @default(cuid())
+  pincode String @unique
+  area    String
 }
